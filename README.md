@@ -9,7 +9,8 @@ A minimal, production-ready template for developing Obsidian plugins with TypeSc
 - 🎨 **CSS Bundling** - Automatically collects and bundles all CSS files from your project
 - 🔄 **Hot Reload** - Auto-copy to vault on file changes during development
 - 📦 **Production Build** - Optimized builds with tree-shaking and minification
-- 🚀 **GitHub Actions** - Automated releases with CI/CD
+- 🚀 **GitHub Actions** - Automated linting and releases with CI/CD
+- ✅ **ESLint** - Modern ESLint v9+ with Obsidian-compliant rules
 - 🔐 **Environment Variables** - Secure vault path management with `.env`
 
 ## Getting Started
@@ -129,6 +130,30 @@ src/
 ```
 
 All these files will be bundled into a single `styles.css` with source comments for easy debugging.
+
+## GitHub Actions (CI/CD)
+
+This template includes automated workflows:
+
+### Lint Workflow
+
+Runs on every push and pull request to the `main` branch:
+- ✅ Runs ESLint to check code quality
+- ✅ Runs TypeScript type checking
+- ✅ Ensures code meets Obsidian plugin standards
+
+The workflow must pass before merging PRs.
+
+### Release Workflow
+
+Triggers when you push a git tag (e.g., `1.0.0`):
+- ✅ Installs dependencies
+- ✅ Builds the plugin with `npm run build:release`
+- ✅ Creates a GitHub release
+- ✅ Attaches `main.js`, `manifest.json`, and `styles.css`
+- ✅ Generates release notes automatically
+
+No manual building or file uploads required!
 
 ## Version Management
 
