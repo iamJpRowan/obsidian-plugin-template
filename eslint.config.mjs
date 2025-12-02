@@ -34,6 +34,7 @@ export default tseslint.config(
 			"version-bump.mjs",
 			"node_modules/**",
 			".obsidian/**",
+			"build/**",
 		],
 	}
 );

@@ -75,11 +75,21 @@ You'll need to reload Obsidian to see changes (Cmd/Ctrl + R).
 
 ### 7. Build for Production
 
+For local testing in your vault:
+
 ```bash
 npm run build
 ```
 
 This creates optimized production files in your vault's plugin directory.
+
+For packaging and releases (CI/CD):
+
+```bash
+npm run build:release
+```
+
+This creates optimized files in the `build/` directory without requiring `VAULT_PLUGIN_PATH`.
 
 ## Project Structure
 
@@ -90,6 +100,7 @@ This creates optimized production files in your vault's plugin directory.
 │   ├── manifest.json    # Plugin manifest
 │   ├── types.ts         # Custom types and interfaces
 │   └── styles.css       # Optional: main styles (auto-bundled)
+├── build/               # Release build output (gitignored)
 ├── .env                 # Environment variables (create from .env.example)
 ├── .env.example         # Example environment configuration
 ├── eslint.config.mjs    # ESLint configuration (flat config)
@@ -143,8 +154,8 @@ When you push a git tag, the GitHub Action automatically:
 
 ### Manual Release
 
-1. Run `npm run build`
-2. Copy these files from your vault's plugin directory:
+1. Run `npm run build:release`
+2. Copy these files from the `build/` directory:
    - `main.js`
    - `manifest.json`
    - `styles.css`
