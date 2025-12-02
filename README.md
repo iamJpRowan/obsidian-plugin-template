@@ -92,7 +92,7 @@ This creates optimized production files in your vault's plugin directory.
 │   └── styles.css       # Optional: main styles (auto-bundled)
 ├── .env                 # Environment variables (create from .env.example)
 ├── .env.example         # Example environment configuration
-├── .eslintrc.json       # ESLint configuration
+├── eslint.config.mjs    # ESLint configuration (flat config)
 ├── .gitignore           # Git ignore rules
 ├── .cursorignore        # Cursor ignore rules
 ├── esbuild.config.mjs   # Build configuration
@@ -163,6 +163,23 @@ Install the [Hot-Reload plugin](https://github.com/pjeby/hot-reload) for automat
 ### Debugging
 
 Use the Developer Console (Cmd/Ctrl + Shift + I) to view console logs and errors.
+
+### Linting
+
+The template uses ESLint v9+ with flat config format for code quality:
+
+```bash
+# Check for linting errors
+npm run lint
+
+# Automatically fix linting errors
+npm run lint:fix
+
+# Type check without building
+npm run typecheck
+```
+
+The linting configuration (`eslint.config.mjs`) matches Obsidian's plugin submission requirements.
 
 ### TypeScript Path Aliases
 
