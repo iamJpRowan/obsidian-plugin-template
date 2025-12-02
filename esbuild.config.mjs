@@ -80,8 +80,8 @@ async function copyPluginFiles() {
     // Create the directory if it doesn't exist
     await fs.mkdir(outDir, { recursive: true })
 
-    // Copy manifest.json
-    await fs.copyFile("src/manifest.json", path.join(outDir, "manifest.json"))
+    // Copy manifest.json from root
+    await fs.copyFile("manifest.json", path.join(outDir, "manifest.json"))
 
     // Bundle CSS files
     await bundleCssFiles()
@@ -140,23 +140,30 @@ if (prod) {
   // Initial copy of plugin files
   await copyPluginFiles()
 
-  // Set up file watcher for the entire src directory
-  const watcher = watch(
+  // Set up file watcher for the src directory (CSS files)
+  const srcWatcher = watch(
     "src",
     { recursive: true },
     async (eventType, filename) => {
-      if (filename === "manifest.json") {
-        await copyPluginFiles()
-      } else if (filename && filename.endsWith(".css")) {
+      if (filename && filename.endsWith(".css")) {
         // Re-bundle CSS whenever any CSS file changes
         await bundleCssFiles()
       }
     }
   )
 
+  // Set up file watcher for manifest.json at root
+  const manifestWatcher = watch(
+    "manifest.json",
+    async () => {
+      await copyPluginFiles()
+    }
+  )
+
   // Handle cleanup on process termination
   process.on("SIGINT", () => {
-    watcher.close()
+    srcWatcher.close()
+    manifestWatcher.close()
     context.dispose()
     process.exit(0)
   })
