@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -noEmit -skipLibCheck",
-    "version": "node version-bump.mjs && git add manifest.json versions.json"
+    "version": "node version-bump.mjs && git add manifest.json versions.json",
+    "prepare": "husky"
   },
   "keywords": [
     "obsidian",
@@ -18,6 +19,11 @@
   ],
   "author": "",
   "license": "MIT",
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ]
+  },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "@types/node": "^16.11.6",
@@ -26,6 +32,8 @@
     "esbuild": "0.17.3",
     "eslint": "^9.15.0",
     "glob": "^11.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "obsidian": "latest",
     "tslib": "2.4.0",
     "typescript": "5.3.3",

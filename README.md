@@ -217,6 +217,17 @@ npm run typecheck
 
 The linting configuration (`eslint.config.mjs`) matches Obsidian's plugin submission requirements.
 
+### Pre-commit Hooks
+
+The template uses Husky and lint-staged to automatically lint your code before commits:
+
+- **Automatic Setup**: Git hooks are installed automatically when you run `npm install`
+- **Fast Linting**: Only lints staged files (not the entire codebase)
+- **Auto-fix**: Automatically fixes linting errors when possible
+- **Prevents Bad Commits**: Stops commits with unfixable linting errors
+
+This ensures code quality and prevents CI failures due to linting issues.
+
 ### TypeScript Path Aliases
 
 The template includes a `@/*` path alias pointing to `src/*`:
