@@ -56,6 +56,19 @@ When suggesting approaches, prefer:
 - if file.path changes the corresponding item should be removed from memory and then added back with the new path index
 - Each directory should have a clear single responsibility (data stores, UI components, form logic, etc.)
 
+## Git Commit Conventions
+
+- **Use semantic commit prefixes** for all commits:
+  - `feat:` - New features
+  - `fix:` - Bug fixes
+  - `chore:` - Maintenance tasks, dependency updates, configuration
+  - `docs:` - Documentation changes
+  - `refactor:` - Code restructuring without changing behavior
+  - `style:` - Code style/formatting changes
+  - `test:` - Adding or updating tests
+- Keep the first line under 72 characters
+- Use the body for additional context when needed
+
 ## Obsidian Plugin Guidelines Compliance
 
 This plugin follows the [Obsidian Plugin Guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines). Key standards:
