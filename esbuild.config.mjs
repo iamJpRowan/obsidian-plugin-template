@@ -13,27 +13,42 @@ dotenv.config()
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
 
+// Read plugin ID from manifest.json
+async function getPluginId() {
+  const manifestPath = path.join(__dirname, "manifest.json")
+  const manifestContent = await fs.readFile(manifestPath, "utf8")
+  const manifest = JSON.parse(manifestContent)
+  return manifest.id
+}
+
 // Detect build modes
 const prod = process.argv[2] === "production"
 const isReleaseBuild = process.env.RELEASE_BUILD === "true"
 
 // Determine output directory
-const outDir = isReleaseBuild
-  ? path.join(__dirname, "build")
-  : process.env.VAULT_PLUGIN_PATH
+async function getOutputDir() {
+  if (isReleaseBuild) {
+    return path.join(__dirname, "build")
+  }
 
-// Validate output directory
-if (!outDir) {
-  console.error("Error: VAULT_PLUGIN_PATH environment variable is not set")
-  console.error(
-    "Please create a .env file with VAULT_PLUGIN_PATH=/path/to/vault/.obsidian/plugins/your-plugin"
-  )
-  console.error("\nFor CI/CD builds, set RELEASE_BUILD=true to build to ./build directory")
-  process.exit(1)
+  const vaultPath = process.env.VAULT_PATH
+  if (!vaultPath) {
+    console.error("Error: VAULT_PATH environment variable is not set")
+    console.error("Please create a .env file with VAULT_PATH=/path/to/your/vault")
+    console.error("\nFor CI/CD builds, set RELEASE_BUILD=true to build to ./build directory")
+    process.exit(1)
+  }
+
+  const pluginId = await getPluginId()
+  return path.join(vaultPath, ".obsidian", "plugins", pluginId)
 }
+
+const outDir = await getOutputDir()
 
 if (isReleaseBuild) {
   console.info("Building for release to ./build directory")
+} else {
+  console.info(`Building to vault plugin directory: ${outDir}`)
 }
 
 // Bundle all CSS files into one
